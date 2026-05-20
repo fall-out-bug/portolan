@@ -32,3 +32,12 @@
 | GitHub checks | not_assessed: no checks reported on the branch |
 | Review approval | not_assessed: no human approval recorded |
 | Merge readiness | not ready-to-merge without explicit user/human approval |
+
+## Follow-Up Adjustment
+
+After PR readiness, the guide was corrected to avoid a hard dependency on a
+future `portolan doctor` command. Missing `doctor` is now a Bigtop smoke gap,
+and agents fall back to current help/version checks. Current fallback output
+uses `/tmp/portolan-run` so a selected repository root is not mutated by
+fallback scan and packet commands; `.portolan/run` remains the target bundle for
+future `portolan map`.

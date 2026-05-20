@@ -13,27 +13,27 @@
 
 | Finding | Evidence State | Source | Confidence | Next Check |
 | --- | --- | --- | --- | --- |
-| `service-a` reads `config/service-a.yaml`. | `source-visible` | `graph.json#/relationships/12` | high | Confirm whether runtime uses the same path. |
-| `worker-b` depends on queue `jobs.ready`. | `metadata-visible` | `findings.jsonl:relationship:queue-jobs-ready` | medium | Add runtime export if queue bindings are dynamic. |
+| `service-a` reads `config/service-a.yaml`. | `source-visible` | `graph.json#/edges/12` | high | Confirm whether runtime uses the same path. |
+| `worker-b` depends on queue `jobs.ready`. | `metadata-visible` | `findings.jsonl:REL-001` | medium | Add runtime export if queue bindings are dynamic. |
 
 ## Duplication
 
 | Finding | Evidence State | Source | Confidence | Next Check |
 | --- | --- | --- | --- | --- |
-| Two deployment manifests repeat the same resource limits. | `metadata-visible` | `findings.jsonl:duplication:k8s-limits-01` | medium | Check whether the duplication is intentional per environment. |
+| Two deployment manifests repeat the same resource limits. | `metadata-visible` | `findings.jsonl:DUP-001` | medium | Check whether the duplication is intentional per environment. |
 
 ## Configuration Surfaces
 
 | Surface | Evidence State | Source | Confidence | Next Check |
 | --- | --- | --- | --- | --- |
-| `PORTOLAN_OUTPUT_DIR` controls output location. | `source-visible` | `graph.json#/nodes/env/PORTOLAN_OUTPUT_DIR` | high | Verify default in CLI help. |
+| `PORTOLAN_OUTPUT_DIR` controls output location. | `source-visible` | `graph.json#/nodes/3` | high | Verify default in CLI help. |
 | Runtime port for `service-a` is not visible in local metadata. | `unknown` | `run.json#/skipped/runtime` | low | Provide a local runtime export. |
 
 ## Technical Debt
 
 | Finding | Evidence State | Source | Confidence | Next Check |
 | --- | --- | --- | --- | --- |
-| Import adapter emits graph nodes without a stable owner field. | `source-visible` | `findings.jsonl:debt:adapter-owner-field` | medium | Decide whether owner belongs in schema or packet only. |
+| Import adapter emits graph nodes without a stable owner field. | `source-visible` | `findings.jsonl:DEBT-001` | medium | Decide whether owner belongs in schema or packet only. |
 
 ## Unknown
 

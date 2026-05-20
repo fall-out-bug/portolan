@@ -42,8 +42,18 @@ Use `not_assessed` for a surface you did not check.
    portolan doctor
    ```
 
-   If this command is missing or fails, stop and report the blocker. Do not
-   replace Portolan with manual repo exploration.
+   If `portolan doctor` is unavailable, do not stop. Record the missing doctor
+   command as a Bigtop smoke gap and run the current command checks instead:
+
+   ```bash
+   portolan --version
+   portolan scan --help
+   portolan packet render --help
+   portolan import cyclonedx --help
+   ```
+
+   If these current commands are also missing or fail, stop and report the
+   blocker. Do not replace Portolan with manual repo exploration.
 
 2. Prefer the target map command once it exists:
 
@@ -56,10 +66,11 @@ Use `not_assessed` for a surface you did not check.
    product gap. Useful current commands include:
 
    ```bash
-   portolan scan --selection <selection.json> --out .portolan/run/graph.json
-   portolan packet render --graph .portolan/run/graph.json --out .portolan/run/map.md
-   portolan import cyclonedx --in <sbom.json> --out .portolan/run/graph.json
-   portolan diff --base <base-graph.json> --head <head-graph.json> --out .portolan/run/diff.json
+   mkdir -p /tmp/portolan-run
+   portolan scan --selection <selection.json> --out /tmp/portolan-run/graph.json --force
+   portolan packet render --graph /tmp/portolan-run/graph.json --out /tmp/portolan-run/map.md --force
+   portolan import cyclonedx --in <sbom.json> --out /tmp/portolan-run/import-graph.json --force
+   portolan diff --base <base-graph.json> --head <head-graph.json> --out /tmp/portolan-run/diff.json --force
    ```
 
    For the immediate Apache Bigtop smoke, use the prepared local corpus profile
@@ -125,7 +136,7 @@ artifacts support that claim.
 
 Stop and report a blocker when:
 
-- `portolan doctor` is missing or fails;
+- `portolan doctor` is missing and the current command checks also fail;
 - required local inputs are missing;
 - existing artifacts are stale and cannot be regenerated;
 - the user asks for network access, mutation, or credentials but has not
