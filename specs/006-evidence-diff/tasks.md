@@ -37,7 +37,7 @@
 - [x] T020 Run `go run ./cmd/portolan diff --base testdata/evidence-diff/base.json --head testdata/evidence-diff/head.json --out /tmp/portolan-diff.json --force`.
 - [x] T021 Run `jq empty /tmp/portolan-diff.json`.
 - [x] T022 Run `git diff --check`.
-- [ ] T023 Create or update PR and run PR review cycle.
+- [x] T023 Create or update PR and run PR review cycle.
 
 ## Dependencies
 

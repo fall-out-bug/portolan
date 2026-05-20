@@ -858,6 +858,21 @@ func TestRunDiffOutputSafety(t *testing.T) {
 		}
 		readGraph(t, existing)
 	})
+
+	t.Run("refuses output symlink", func(t *testing.T) {
+		target := filepath.Join(root, "target.json")
+		link := filepath.Join(root, "link.json")
+		mustWrite(t, target, "{}")
+		if err := os.Symlink(target, link); err != nil {
+			t.Skipf("symlink unavailable: %v", err)
+		}
+		var stdout bytes.Buffer
+		var stderr bytes.Buffer
+		code := Run([]string{"diff", "--base", "testdata/evidence-diff/base.json", "--head", "testdata/evidence-diff/head.json", "--out", link, "--force"}, &stdout, &stderr)
+		if code == 0 || !strings.Contains(stderr.String(), "symlink") {
+			t.Fatalf("code = %d stderr = %q, want symlink error", code, stderr.String())
+		}
+	})
 }
 
 func TestRunScanFixtureStillWorksAfterSelectionInventoryExpansion(t *testing.T) {
