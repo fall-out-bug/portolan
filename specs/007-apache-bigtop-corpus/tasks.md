@@ -40,9 +40,12 @@
 
 - [x] T014 Add a Bigtop skill-smoke runbook under `docs/test-corpora/apache-bigtop.md` or `specs/007-apache-bigtop-corpus/`.
 - [x] T015 Prepare a minimal local Bigtop fixture selection that uses current Portolan commands and does not fetch upstream resources.
-- [ ] T016 Run Cursor + Composer 2.5 against the portable Portolan agent guide and the minimal Bigtop fixture.
-  - Status: `not_assessed`.
-  - 2026-05-20: external Cursor + Composer 2.5 operator lane was unavailable in this Codex session.
+- [x] T016 Run Cursor + Composer 2.5 against the portable Portolan agent guide and the minimal Bigtop fixture.
+  - Status: degraded evidence.
+  - 2026-05-20: Cursor Agent with `composer-2.5` read the guide, Cursor rule,
+    and fixture and returned a smoke report, but shell commands were blocked
+    inside the Cursor lane. Treat Cursor command execution as `not_assessed`;
+    use the separate local CLI smoke for verified scan/packet evidence.
 - [x] T017 Record a gap ledger under `specs/007-apache-bigtop-corpus/reviews/` with agent workflow failures, missing relationships, missing duplication, missing configuration surfaces, missing technical-debt findings, packet usefulness gaps, and unsupported agent inferences.
 - [x] T018 Update `docs/product-backlog.md` to prioritize only the product gaps proven by the smoke.
 

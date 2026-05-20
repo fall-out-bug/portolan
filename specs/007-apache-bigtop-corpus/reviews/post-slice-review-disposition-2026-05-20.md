@@ -20,8 +20,10 @@ Date: 2026-05-20
 | T016 `not_assessed` was too easy to miss. | minimax | Accepted and fixed. The task ledger now includes an explicit `Status: not_assessed` line. |
 | Gap ledger artifact was missing from review input. | kimi | Rejected with local evidence. The artifact exists at `specs/007-apache-bigtop-corpus/reviews/acceptance-smoke-ledger-2026-05-20.md`; it was not visible to that lane because the prompt used `git diff` and omitted untracked files. |
 
-## Remaining Blocker
+## Follow-Up Test Result
 
-The Cursor + Composer 2.5 operator lane remains `not_assessed`. This slice
-records local fallback evidence only and must not be used as a ready-to-merge
-claim for the full P1-007 outcome.
+The Cursor + Composer 2.5 operator lane was run later with `cursor agent
+--print --model composer-2.5`. It produced a smoke report and followed the
+guide at the prompt/report level, but shell command execution was blocked
+inside Cursor. Treat the lane as degraded evidence: operator usability is partly
+assessed, but Cursor-side artifact generation remains `not_assessed`.

@@ -20,7 +20,7 @@ passing or failing external operator result.
 | Local scan | verified | `portolan scan --selection testdata/apache-bigtop-smoke/selection.json --out <tmp>/graph.json --force` succeeded. |
 | Packet render | verified | `portolan packet render --graph <tmp>/graph.json --out <tmp>/map.md --force` succeeded. |
 | Target `portolan map` command | verified gap | `portolan map --root testdata/apache-bigtop-smoke/repo --out <tmp>/run` returned `unknown command "map"`. |
-| Cursor + Composer 2.5 operator run | not_assessed | External interactive operator stack was unavailable in this session. |
+| Cursor + Composer 2.5 operator run | degraded evidence | `cursor agent --print --model composer-2.5` read the guide, Cursor rule, smoke runbook, and fixture, and returned a smoke report. Shell commands were blocked inside the Cursor lane, so Cursor-side CLI execution remains `not_assessed`. |
 
 ## Gap Ledger
 
@@ -33,6 +33,7 @@ passing or failing external operator result.
 | GAP-007-005 | Apache Bigtop smoke fixture | Report configuration surfaces | `graph.json` and `map.md` | Current fixture can show selected nodes and edges only; env vars, ports, manifests, CI, feature flags, and secret references are not extracted. | Local configuration surface detection without exposing secret values. | config | not_assessed | Package/runtime configuration promises cannot be evaluated on Bigtop yet. | P2 | `012-configuration-surfaces` | open |
 | GAP-007-006 | Apache Bigtop smoke fixture | Produce technical-debt findings | `graph.json` and `map.md` | No debt finding rules or severity/status artifact exists. | Evidence-backed technical-debt findings without readiness verdicts. | tech debt | not_assessed | Agents cannot prioritize Bigtop review gaps without unsupported manual judgment. | P2 | `013-technical-debt-findings` | open |
 | GAP-007-007 | Apache Bigtop smoke fixture | Preserve retired/unknown legacy evidence | `graph.json` from scan | Missing Oozie metadata and source are represented as `cannot_verify`/`unknown`, which is correct, but lifecycle semantics are not first-class. | Retired lifecycle metadata represented separately from source visibility. | evidence | cannot_verify | Retired project status still depends on manually prepared metadata. | P2 | `010-relationship-detection` or later lifecycle modeling | open |
+| GAP-007-008 | Cursor + Composer 2.5 operator lane | Run the acceptance smoke commands from the guide inside Cursor Agent | `cursor agent --print --model composer-2.5` | Composer read the guide and fixture but reported shell command execution blocked, so no Cursor-side `graph.json` or `map.md` artifacts were produced. | Cursor operator lane can execute the documented local fallback commands or clearly delegate command execution to the host runner. | agent workflow, evidence | not_assessed | Operator smoke cannot independently verify artifact generation from inside Cursor; the lane depends on separate local CLI evidence. | P1 | `008-agent-skill-pack` follow-up or Cursor environment setup | open |
 
 ## Disposition
 
@@ -44,5 +45,6 @@ passing or failing external operator result.
   operator-smoke or implementation-slice evidence before status promotion.
 - Accepted with constraint: GAP-007-007 should not become a broad lifecycle
   system until map artifacts and relationship surfaces exist.
-- Not assessed: Cursor + Composer 2.5 usability, because the external operator
-  lane was not run.
+- Degraded: Cursor + Composer 2.5 usability. The operator lane ran and followed
+  the guide at the prompt/report level, but Cursor-side shell execution was
+  blocked, so artifact generation in that lane remains `not_assessed`.
