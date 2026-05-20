@@ -7,10 +7,10 @@ Date: 2026-05-20
 | Surface | Status | Evidence |
 | --- | --- | --- |
 | PR | verified | GitHub PR #9: `https://github.com/fall-out-bug/portolan/pull/9`. |
-| Head | verified | `codex/009-map-command-artifacts` at `559db09d4b10cd7e770d5d6855d597ef3f13e3d9`. |
+| Head | verified | `codex/009-map-command-artifacts` at `8bf0d88d39ab733211b185698e379faa1f428853`. |
 | Base | verified | `main`. |
-| Draft state before closeout | verified | PR was draft during reconstruction. |
-| Merge state | not_assessed | GitHub reported `UNKNOWN` during closeout reconstruction. |
+| Draft state | verified | PR #9 is ready-for-review, not draft. |
+| Merge state | verified | GitHub reported `CLEAN` during refresh after the latest fix commit. |
 | GitHub checks | not_assessed | `gh pr checks 9` reported no checks on the branch. |
 
 ## Local Verification
@@ -32,6 +32,7 @@ Date: 2026-05-20
 | `openrouter/qwen/qwen3.6-plus` | verified | Minor broad output path, missing flag tests, rollback-error concerns, and stale 007 runbook. Accepted fixes applied where actionable. |
 | `openrouter/~google/gemini-pro-latest` | verified | Minor fixture duplication only; fixed. |
 | Local review | verified | Output safety, evidence-state honesty, JSONL/run metadata, and CLI behavior reviewed in `implementation-review-disposition-2026-05-20.md`. |
+| User review | verified | Ancestor-output destructive blocker was reproduced by review, accepted, fixed in `8bf0d88`, and covered by `TestRunMapRejectsOutputAncestorOfRoot`. |
 
 ## Status Matrix
 
@@ -39,9 +40,10 @@ Date: 2026-05-20
 | --- | --- |
 | Implementation | verified |
 | Local verification | verified |
-| Review evidence | verified with minor accepted fixes applied |
-| PR state | draft before closeout; ready-for-review after this closeout if GitHub accepts state change |
+| Review evidence | verified with accepted fixes applied, including ancestor-output blocker |
+| PR state | ready-for-review |
 | GitHub checks | not_assessed |
+| Merge state | verified CLEAN |
 | Merge readiness | not_assessed; no human approval and no GitHub checks |
 | Stop reason | Ready-for-review PR is the correct stop point; merge is not authorized. |
 
