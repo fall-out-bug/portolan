@@ -39,6 +39,10 @@ Date: 2026-05-20
 | Walk errors are silently dropped. | kimi | Accepted and fixed. Walk errors now become run metadata warnings. |
 | Nested `.portolan` directories are not excluded. | kimi | Accepted and fixed. Any path component named `.portolan` is pruned from inventory. |
 | `packet-render` is not an evidence surface. | kimi | Accepted and fixed. It was removed from `enabled_surfaces`; the enabled surface is `source-inventory`. |
+| Broad writable directories such as `/tmp` are not rejected with `--force`. | qwen | Accepted and fixed. The safety guard now rejects the system temp directory itself, while still allowing explicit child paths such as `/tmp/portolan-map-run`. |
+| Missing `--root` and `--out` were not covered at CLI level. | qwen | Accepted and fixed. Integration tests now cover both missing required flags. |
+| Duplicate fixture trees existed under package-local and repo-level `testdata`. | deepseek, gemini | Accepted and fixed. App tests now reference the repo-level fixture with `../../testdata/map-command/repo`; the duplicate package-local fixture was removed. |
+| `graph.json` may lack `schema_version`. | deepseek | Rejected with local evidence. `graph.New()` sets `SchemaVersion`, and CLI verification parses `/tmp/portolan-map-run/graph.json` with `jq`; app tests also assert graph schema shape. |
 
 ## Residual Risk
 

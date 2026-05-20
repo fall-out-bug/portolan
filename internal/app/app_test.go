@@ -13,6 +13,8 @@ import (
 	"github.com/fall-out-bug/portolan/internal/scan"
 )
 
+const mapCommandFixtureRoot = "../../testdata/map-command/repo"
+
 func TestRunVersionWritesVersion(t *testing.T) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
@@ -880,7 +882,7 @@ func TestRunMapWritesArtifactBundle(t *testing.T) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
 
-	code := Run([]string{"map", "--root", "testdata/map-command/repo", "--out", out, "--force"}, &stdout, &stderr)
+	code := Run([]string{"map", "--root", mapCommandFixtureRoot, "--out", out, "--force"}, &stdout, &stderr)
 
 	if code != 0 {
 		t.Fatalf("Run returned %d, want 0; stderr = %q", code, stderr.String())
@@ -916,7 +918,7 @@ func TestRunMapRejectsMissingRootWithoutPartialBundle(t *testing.T) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
 
-	code := Run([]string{"map", "--root", "testdata/map-command/missing", "--out", out}, &stdout, &stderr)
+	code := Run([]string{"map", "--root", "../../testdata/map-command/missing", "--out", out}, &stdout, &stderr)
 
 	if code == 0 {
 		t.Fatalf("Run returned 0, want error")
@@ -943,7 +945,7 @@ func TestRunMapOutputSafety(t *testing.T) {
 	t.Run("existing output requires force", func(t *testing.T) {
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
-		code := Run([]string{"map", "--root", "testdata/map-command/repo", "--out", out}, &stdout, &stderr)
+		code := Run([]string{"map", "--root", mapCommandFixtureRoot, "--out", out}, &stdout, &stderr)
 		if code == 0 || !strings.Contains(stderr.String(), "--force") {
 			t.Fatalf("code = %d stderr = %q, want force error", code, stderr.String())
 		}
@@ -955,7 +957,7 @@ func TestRunMapOutputSafety(t *testing.T) {
 	t.Run("force replaces existing output", func(t *testing.T) {
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
-		code := Run([]string{"map", "--root", "testdata/map-command/repo", "--out", out, "--force"}, &stdout, &stderr)
+		code := Run([]string{"map", "--root", mapCommandFixtureRoot, "--out", out, "--force"}, &stdout, &stderr)
 		if code != 0 {
 			t.Fatalf("code = %d stderr = %q, want success", code, stderr.String())
 		}
@@ -981,6 +983,38 @@ func TestRunMapCreatesPortolanParentOnFirstUse(t *testing.T) {
 	readGraph(t, filepath.Join(out, "graph.json"))
 }
 
+func TestRunMapRejectsMissingRequiredFlags(t *testing.T) {
+	tests := []struct {
+		name string
+		args []string
+		want string
+	}{
+		{
+			name: "missing root",
+			args: []string{"map", "--out", filepath.Join(t.TempDir(), "run")},
+			want: "--root is required",
+		},
+		{
+			name: "missing output",
+			args: []string{"map", "--root", mapCommandFixtureRoot},
+			want: "--out is required",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var stdout bytes.Buffer
+			var stderr bytes.Buffer
+			code := Run(tt.args, &stdout, &stderr)
+			if code == 0 {
+				t.Fatalf("Run returned 0, want error")
+			}
+			if !strings.Contains(stderr.String(), tt.want) {
+				t.Fatalf("stderr = %q, want %q", stderr.String(), tt.want)
+			}
+		})
+	}
+}
+
 func TestRunMapRejectsDangerousForceOutput(t *testing.T) {
 	root := t.TempDir()
 	mustWrite(t, filepath.Join(root, "README.md"), "fixture")
@@ -1002,7 +1036,7 @@ func TestRunMapFindingsJSONLHasRequiredFields(t *testing.T) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
 
-	code := Run([]string{"map", "--root", "testdata/map-command/repo", "--out", out, "--force"}, &stdout, &stderr)
+	code := Run([]string{"map", "--root", mapCommandFixtureRoot, "--out", out, "--force"}, &stdout, &stderr)
 
 	if code != 0 {
 		t.Fatalf("Run returned %d, want 0; stderr = %q", code, stderr.String())
@@ -1043,7 +1077,7 @@ func TestRunMapRunJSONRecordsAuditMetadata(t *testing.T) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
 
-	code := Run([]string{"map", "--root", "testdata/map-command/repo", "--out", out, "--force"}, &stdout, &stderr)
+	code := Run([]string{"map", "--root", mapCommandFixtureRoot, "--out", out, "--force"}, &stdout, &stderr)
 
 	if code != 0 {
 		t.Fatalf("Run returned %d, want 0; stderr = %q", code, stderr.String())

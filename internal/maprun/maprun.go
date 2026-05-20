@@ -219,6 +219,9 @@ func dangerousOutputPath(out, root string) bool {
 	if filepath.Dir(clean) == clean {
 		return true
 	}
+	if clean == filepath.Clean(os.TempDir()) {
+		return true
+	}
 	home, err := os.UserHomeDir()
 	if err == nil && clean == filepath.Clean(home) {
 		return true

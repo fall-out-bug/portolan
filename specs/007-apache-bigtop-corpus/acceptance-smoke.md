@@ -41,7 +41,8 @@ Expected result today:
 
 - `scan` succeeds against local fixture inputs.
 - `packet render` succeeds from the generated graph.
-- `map` fails as an unsupported target command and is recorded as a product gap.
+- `map` writes the target artifact bundle after spec 009.
+- `findings.jsonl` records detector surfaces that remain `not_assessed`.
 - missing Oozie local inputs remain `unknown` or `cannot_verify`.
 - Cursor + Composer usability remains `not_assessed` until the external
   operator lane is run.
