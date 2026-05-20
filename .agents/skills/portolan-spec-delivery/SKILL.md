@@ -54,9 +54,16 @@ Run independent review lanes. Prefer:
 - model lanes through `pi` when useful, using enabled models from
   `~/.pi/agent/settings.json`.
 
-For important PR/spec reviews, Claude and Gemini may be used. Count their output
-only when the artifact is non-empty, on-task, and specific. Record empty or
-stale output as `not_assessed`.
+Default slice-review model lanes:
+
+- `kimi-coding/kimi-for-coding`
+- `minimax/MiniMax-M2.7`
+- `zai/glm-5.1`
+
+These are the normal subscription-backed slice reviewers. Use all three for
+ordinary implementation slices unless the slice is purely mechanical or
+documentation-only. If a lane is unavailable, empty, stale, or off-task, mark it
+`not_assessed` and do not count it toward coverage.
 
 Write review dispositions under:
 
@@ -109,6 +116,14 @@ touches:
 - schema compatibility;
 - CLI user behavior.
 
+For ordinary code slices, run the default slice-review model lanes through `pi`:
+
+```bash
+pi --no-tools --no-context-files --no-session --model kimi-coding/kimi-for-coding -p "$PROMPT"
+pi --no-tools --no-context-files --no-session --model minimax/MiniMax-M2.7 -p "$PROMPT"
+pi --no-tools --no-context-files --no-session --model zai/glm-5.1 -p "$PROMPT"
+```
+
 Review findings must be dispositioned:
 
 - accepted/fixed;
@@ -126,8 +141,15 @@ Before marking a PR ready:
 1. Reconstruct PR head, diff, draft state, merge state, checks, and review
    artifacts with `gh pr view`, `gh pr diff`, and `gh pr checks`.
 2. Run local verification.
-3. Run independent review lanes. For high-risk review cycles, use Gemini and/or
-   Claude through `pi` plus a repo-grounded local reviewer.
+3. Run independent review lanes. Default PR review model lanes are:
+   - `openrouter/deepseek/deepseek-v4-pro`
+   - `openrouter/qwen/qwen3.6-plus`
+   - Gemini Flash 3.5 through `pi`
+   - one repo-grounded local reviewer
+
+   Before launch, inspect `~/.pi/agent/settings.json` for exact enabled IDs. If
+   Gemini Flash 3.5 is absent, record that lane as `not_assessed` or substitute
+   the closest configured Gemini with an explicit note in the disposition.
 4. Fix accepted findings and record a PR review-cycle disposition under the
    spec's `reviews/` directory.
 5. Push, refresh PR state, and mark ready only when blockers are fixed.
