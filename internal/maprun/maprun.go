@@ -13,6 +13,7 @@ import (
 
 	"github.com/fall-out-bug/portolan/internal/graph"
 	"github.com/fall-out-bug/portolan/internal/packet"
+	"github.com/fall-out-bug/portolan/internal/relationships"
 )
 
 type Options struct {
@@ -90,7 +91,18 @@ func Run(opts Options) (Result, error) {
 		Packet:   filepath.Join(out, "map.md"),
 	}
 	g, walkWarnings := graphForRoot(root)
-	findings := findingsForRoot(root)
+	relationshipResult := relationships.Detect(root)
+	g.Nodes = append(g.Nodes, relationshipResult.Nodes...)
+	g.Edges = append(g.Edges, relationshipResult.Edges...)
+	sortGraph(&g)
+	findings := findingsForRoot(root, relationshipResult)
+	skippedSurfaces := []string{"duplication-detection", "configuration-surfaces", "technical-debt-findings"}
+	warnings := append([]string{
+		"duplication, configuration, and technical-debt detectors are not implemented; placeholder findings are not_assessed",
+	}, walkWarnings...)
+	for _, issue := range relationshipResult.Issues {
+		warnings = append(warnings, "relationship detection: "+issue.Path+": "+issue.Reason)
+	}
 	metadata := RunMetadata{
 		SchemaVersion:   SchemaVersion,
 		Command:         "portolan map",
@@ -99,11 +111,9 @@ func Run(opts Options) (Result, error) {
 		Root:            root,
 		OutputPath:      out,
 		Artifacts:       artifacts,
-		EnabledSurfaces: []string{"source-inventory"},
-		SkippedSurfaces: []string{"relationship-detection", "duplication-detection", "configuration-surfaces", "technical-debt-findings"},
-		Warnings: append([]string{
-			"relationship, duplication, configuration, and technical-debt detectors are not implemented; placeholder findings are not_assessed",
-		}, walkWarnings...),
+		EnabledSurfaces: []string{"source-inventory", "relationship-detection"},
+		SkippedSurfaces: skippedSurfaces,
+		Warnings:        warnings,
 	}
 
 	if err := writeGraph(filepath.Join(temp, "graph.json"), g); err != nil {
@@ -337,8 +347,8 @@ func pathHasHiddenPortolan(path string) bool {
 	return false
 }
 
-func findingsForRoot(root string) []Finding {
-	return []Finding{
+func findingsForRoot(root string, relationshipResult relationships.Result) []Finding {
+	findings := []Finding{
 		{
 			ID:             "finding-inventory-root",
 			Kind:           "inventory",
@@ -349,11 +359,50 @@ func findingsForRoot(root string) []Finding {
 			Confidence:     1.0,
 			Status:         "observed",
 		},
-		notAssessedFinding("finding-relationships-not-assessed", "relationships", "Relationship detection is not implemented in this map slice."),
+	}
+	findings = append(findings, relationshipFindings(root, relationshipResult)...)
+	findings = append(findings,
 		notAssessedFinding("finding-duplication-not-assessed", "duplication", "Duplication detection is not implemented in this map slice."),
 		notAssessedFinding("finding-configuration-not-assessed", "configuration", "Configuration surface detection is not implemented in this map slice."),
 		notAssessedFinding("finding-technical-debt-not-assessed", "technical-debt", "Technical-debt finding rules are not implemented in this map slice."),
+	)
+	return findings
+}
+
+func relationshipFindings(root string, result relationships.Result) []Finding {
+	var findings []Finding
+	total := result.SourceImportCount + result.ManifestRequireCount
+	if total > 0 {
+		state := string(graph.MetadataVisible)
+		if result.SourceImportCount > 0 {
+			state = string(graph.SourceVisible)
+		}
+		findings = append(findings, Finding{
+			ID:             "finding-relationships-observed",
+			Kind:           "relationships",
+			Summary:        fmt.Sprintf("Detected %d source import and %d manifest dependency relationships from local Go inputs.", result.SourceImportCount, result.ManifestRequireCount),
+			Severity:       "info",
+			EvidenceState:  state,
+			EvidenceSource: root,
+			Confidence:     1.0,
+			Status:         "observed",
+		})
+	} else {
+		findings = append(findings, notAssessedFinding("finding-relationships-not-assessed", "relationships", "Relationship detection currently supports Go imports and go.mod manifests; no supported relationship inputs were observed."))
 	}
+	for i, issue := range result.Issues {
+		findings = append(findings, Finding{
+			ID:             fmt.Sprintf("finding-relationships-cannot-verify-%03d", i+1),
+			Kind:           "relationships",
+			Summary:        "Could not verify relationship input: " + issue.Reason,
+			Severity:       "info",
+			EvidenceState:  string(graph.CannotVerify),
+			EvidenceSource: issue.Path,
+			Confidence:     0,
+			Status:         "cannot_verify",
+		})
+	}
+	return findings
 }
 
 func notAssessedFinding(id, kind, summary string) Finding {
