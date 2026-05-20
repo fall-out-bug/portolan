@@ -53,12 +53,20 @@ func Run(opts Options) (graph.Graph, error) {
 	}
 
 	g := graph.New()
+	nodeIDs := map[string]struct{}{}
 	for _, target := range sel.Targets {
-		g.Nodes = append(g.Nodes, scanTarget(target)...)
+		nodes := scanTarget(target)
+		for _, node := range nodes {
+			g.Nodes = append(g.Nodes, node)
+			nodeIDs[node.ID] = struct{}{}
+		}
 	}
 	for _, claimSource := range sel.Claims {
-		nodes, edges := scanClaimSource(claimSource)
-		g.Nodes = append(g.Nodes, nodes...)
+		nodes, edges := scanClaimSource(claimSource, nodeIDs)
+		for _, node := range nodes {
+			g.Nodes = append(g.Nodes, node)
+			nodeIDs[node.ID] = struct{}{}
+		}
 		g.Edges = append(g.Edges, edges...)
 	}
 
@@ -282,7 +290,7 @@ func outsideSymlinkNodes(target selection.Target, root string) []graph.Node {
 	return nodes
 }
 
-func scanClaimSource(source selection.ClaimSource) ([]graph.Node, []graph.Edge) {
+func scanClaimSource(source selection.ClaimSource, existingNodeIDs map[string]struct{}) ([]graph.Node, []graph.Edge) {
 	if info, err := os.Lstat(source.Path); err == nil && info.Mode()&os.ModeSymlink != 0 {
 		return []graph.Node{claimSourceNode(source, graph.CannotVerify, "claim path is a symlink")}, nil
 	} else if err != nil && !os.IsNotExist(err) {
@@ -317,8 +325,8 @@ func scanClaimSource(source selection.ClaimSource) ([]graph.Node, []graph.Edge) 
 		if sourceLabel == "" {
 			sourceLabel = source.Path
 		}
-		nodesByID[claim.Subject] = claimNode(claim.Subject, sourceLabel)
-		nodesByID[claim.Object] = claimNode(claim.Object, sourceLabel)
+		addClaimNode(nodesByID, existingNodeIDs, claim.Subject, sourceLabel)
+		addClaimNode(nodesByID, existingNodeIDs, claim.Object, sourceLabel)
 		edges = append(edges, graph.Edge{
 			From: claim.Subject,
 			To:   claim.Object,
@@ -335,6 +343,16 @@ func scanClaimSource(source selection.ClaimSource) ([]graph.Node, []graph.Edge) 
 		nodes = append(nodes, node)
 	}
 	return nodes, edges
+}
+
+func addClaimNode(nodesByID map[string]graph.Node, existingNodeIDs map[string]struct{}, id, source string) {
+	if _, exists := existingNodeIDs[id]; exists {
+		return
+	}
+	if _, exists := nodesByID[id]; exists {
+		return
+	}
+	nodesByID[id] = claimNode(id, source)
 }
 
 func claimSourceNode(source selection.ClaimSource, state graph.EvidenceState, reason string) graph.Node {
@@ -367,7 +385,7 @@ func normalizeEdgeKind(kind string) string {
 	case "owns", "depends-on", "exposes", "imports", "observes", "claims":
 		return kind
 	default:
-		return "claims"
+		return "unknown"
 	}
 }
 
@@ -392,6 +410,12 @@ func sortGraph(g *graph.Graph) {
 		if g.Edges[i].To != g.Edges[j].To {
 			return g.Edges[i].To < g.Edges[j].To
 		}
-		return g.Edges[i].Kind < g.Edges[j].Kind
+		if g.Edges[i].Kind != g.Edges[j].Kind {
+			return g.Edges[i].Kind < g.Edges[j].Kind
+		}
+		if g.Edges[i].Evidence.Source != g.Edges[j].Evidence.Source {
+			return g.Edges[i].Evidence.Source < g.Edges[j].Evidence.Source
+		}
+		return g.Edges[i].Evidence.Reason < g.Edges[j].Evidence.Reason
 	})
 }

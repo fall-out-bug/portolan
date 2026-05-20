@@ -133,6 +133,88 @@ func TestRunScanWritesEvidenceGraph(t *testing.T) {
 	}
 }
 
+func TestRunScanDoesNotDuplicateClaimDerivedNodeIDs(t *testing.T) {
+	root := t.TempDir()
+	repo := filepath.Join(root, "repo")
+	mustMkdir(t, repo)
+	mustWrite(t, filepath.Join(repo, "README.md"), "# Demo\n")
+	claims := filepath.Join(root, "claims.json")
+	mustWrite(t, claims, `{"claims":[{"id":"claim-repo-db","subject":"repo","predicate":"depends-on","object":"database","source":"architecture-interview"}]}`)
+	selection := filepath.Join(root, "selection.json")
+	mustWrite(t, selection, `{"schema_version":"0.1.0","targets":[{"id":"repo","kind":"repository","path":`+quote(repo)+`}],"claims":[{"id":"claims-main","path":`+quote(claims)+`}]}`)
+	out := filepath.Join(root, "graph.json")
+
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+	code := Run([]string{"scan", "--selection", selection, "--out", out}, &stdout, &stderr)
+
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr = %q", code, stderr.String())
+	}
+	graph := readGraph(t, out)
+	seen := map[string]int{}
+	for _, item := range graph["nodes"].([]any) {
+		node := item.(map[string]any)
+		seen[node["id"].(string)]++
+	}
+	for id, count := range seen {
+		if count != 1 {
+			t.Fatalf("node id %q appeared %d times", id, count)
+		}
+	}
+	for _, item := range graph["nodes"].([]any) {
+		node := item.(map[string]any)
+		if node["id"] != "repo" {
+			continue
+		}
+		evidence := node["evidence"].(map[string]any)
+		if evidence["state"] != "source-visible" {
+			t.Fatalf("repo evidence = %#v, want source-visible", evidence)
+		}
+	}
+}
+
+func TestRunScanKeepsFirstClaimNodeEvidenceAndUnknownPredicate(t *testing.T) {
+	root := t.TempDir()
+	repo := filepath.Join(root, "repo")
+	mustMkdir(t, repo)
+	mustWrite(t, filepath.Join(repo, "README.md"), "# Demo\n")
+	claims := filepath.Join(root, "claims.json")
+	mustWrite(t, claims, `{"claims":[{"id":"claim-one","subject":"api","predicate":"runs","object":"database","source":"first-source"},{"id":"claim-two","subject":"api","predicate":"depends-on","object":"cache","source":"second-source"}]}`)
+	selection := filepath.Join(root, "selection.json")
+	mustWrite(t, selection, `{"schema_version":"0.1.0","targets":[{"id":"repo","kind":"repository","path":`+quote(repo)+`}],"claims":[{"id":"claims-main","path":`+quote(claims)+`}]}`)
+	out := filepath.Join(root, "graph.json")
+
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+	code := Run([]string{"scan", "--selection", selection, "--out", out}, &stdout, &stderr)
+
+	if code != 0 {
+		t.Fatalf("Run returned %d, want 0; stderr = %q", code, stderr.String())
+	}
+	result := readGraph(t, out)
+	for _, item := range result["nodes"].([]any) {
+		node := item.(map[string]any)
+		if node["id"] != "api" {
+			continue
+		}
+		evidence := node["evidence"].(map[string]any)
+		if evidence["source"] != "first-source" {
+			t.Fatalf("api evidence = %#v, want first-source", evidence)
+		}
+	}
+	foundUnknown := false
+	for _, item := range result["edges"].([]any) {
+		edge := item.(map[string]any)
+		if edge["kind"] == "unknown" {
+			foundUnknown = true
+		}
+	}
+	if !foundUnknown {
+		t.Fatalf("expected an unknown edge kind in %#v", result["edges"])
+	}
+}
+
 func TestRunScanReportsMalformedClaimAsCannotVerify(t *testing.T) {
 	root := t.TempDir()
 	repo := filepath.Join(root, "repo")

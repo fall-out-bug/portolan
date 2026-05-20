@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"os"
 
 	"github.com/fall-out-bug/portolan/internal/scan"
 )
@@ -69,12 +70,12 @@ func runScan(args []string, stdout io.Writer, stderr io.Writer) int {
 		fmt.Fprintf(stderr, "scan: %v\n", err)
 		return 2
 	}
-	encoded, err := scan.Marshal(g)
+	info, err := os.Stat(*outputPath)
 	if err != nil {
-		fmt.Fprintf(stderr, "scan: encode summary: %v\n", err)
+		fmt.Fprintf(stderr, "scan: inspect output: %v\n", err)
 		return 2
 	}
-	fmt.Fprintf(stdout, "wrote %s (%d bytes)\n", *outputPath, len(encoded))
+	fmt.Fprintf(stdout, "wrote %s (%d bytes)\n", *outputPath, info.Size())
 	return 0
 }
 
