@@ -2,7 +2,8 @@
 
 **Feature Branch**: `016-landscape-map-orchestration`
 **Created**: 2026-05-21
-**Status**: Ready for implementation
+**Status**: Local implementation complete; full Bigtop corpus selection and map
+run verified locally; PR review not_assessed.
 **Input**: Product correction: the next Bigtop acceptance case must map the
 complete Bigtop software landscape, not a single Bigtop meta-repository. The
 result must be a CTO-usable map built from selected local repositories,

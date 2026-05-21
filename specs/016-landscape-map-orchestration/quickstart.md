@@ -19,6 +19,17 @@ preparation step may clone or fetch repositories only as an explicit setup
 action before the blind map run. The map run itself remains offline and
 read-only.
 
+After the repositories are present locally, generate the selection from the
+manifest and the checkout directory:
+
+```bash
+portolan selection generate-bigtop \
+  --manifest corpora/apache-bigtop/manifest.json \
+  --repo-dir /path/to/bigtop-landscape/repos \
+  --out /path/to/bigtop-landscape/selection.json \
+  --force
+```
+
 The preparation output is a landscape selection such as:
 
 ```text

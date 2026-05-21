@@ -30,34 +30,29 @@ Required top-level fields:
 
 - `schema_version`
 - `generated_by`
-- `selection_path`
-- `corpus_manifest_path`, nullable
-- `status`: `passed`, `blocked`, or `degraded`
-- `inputs[]`
-- `corpus_inventory[]`
-- `counts`
-- `blockers[]`
-- `warnings[]`
+- `scope`
+- `records[]`
+- `summary`
 
-Each `inputs[]` entry includes:
+`scope` includes:
+
+- `selection_path`, omitted for the `map --root` shortcut
+- `corpus_manifest`, omitted when no corpus manifest is bound
+- `require_full_corpus`
+
+Each `records[]` entry includes:
 
 - `id`
-- `category`: repository, metadata, runtime, claim, black-box, tool-output
-- `path` or `reference`
-- `status`: visible, missing, malformed, unsupported, blocked, not_assessed
+- `kind`: repository, metadata, runtime, claim, black-box, tool-output, corpus
+  manifest, or manifest inventory kind
+- `status`: visible, represented, missing, cannot_verify, unknown,
+  not_assessed, or blocked
 - `evidence_state`
+- `source`
 - `reason`
 
-Each `corpus_inventory[]` entry includes:
-
-- `id`
-- `label`
-- `manifest_kind`
-- `representation`: local-source, metadata-only, runtime, claim, black-box,
-  retired, unknown, cannot_verify, missing
-- `selection_id`, nullable
-- `status`
-- `reason`
+`summary` is a deterministic count map keyed by `total`, `status:<status>`, and
+`evidence_state:<state>`.
 
 For Bigtop acceptance, any active or external product repository target that is
 not represented as a local `source-visible` repository makes coverage
