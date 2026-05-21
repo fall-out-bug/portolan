@@ -43,7 +43,7 @@
 - [x] T025 Run a `jq` check that every `imports` and `depends-on` edge in `/tmp/portolan-relationships-run/graph.json` has `from`, `to`, `kind`, `evidence.state`, and `evidence.source`.
 - [x] T026 Run JSONL parse check over `/tmp/portolan-relationships-run/findings.jsonl`.
 - [x] T027 Run `git diff --check`.
-- [ ] T028 Create or update PR and run PR review cycle.
+- [x] T028 Create or update PR and run PR review cycle.
 
 ## Dependencies
 

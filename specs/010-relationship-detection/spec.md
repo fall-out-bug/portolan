@@ -2,7 +2,7 @@
 
 **Feature Branch**: `010-relationship-detection`
 **Created**: 2026-05-20
-**Status**: Implemented locally; PR review pending
+**Status**: PR review complete; readiness closeout pending
 **Input**: Product backlog P2-010: detect source, metadata, runtime, and
 claim-backed relationships across a codebase, prioritized by the Bigtop smoke.
 
