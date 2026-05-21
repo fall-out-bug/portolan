@@ -12,16 +12,17 @@ immediate Bigtop-driven product test:
    packet rendering, importer normalization, and black-box evidence handling.
 2. **Agent toolbox**: a portable skill/rule pack that any agent can follow
    before answering.
-3. **Agent bootstrap and blind acceptance**: an agent can discover Portolan
-   from the repository root or portable skill, then run the same mapping
-   protocol against arbitrary local targets.
-4. **Bigtop smoke immediately after the generic agent path**: Cursor + Composer
+3. **Agent bootstrap discovery**: an agent can discover Portolan from the
+   repository root or portable skill without being told an internal guide path.
+4. **Blind agent acceptance**: an agent can run the same target-agnostic mapping
+   protocol against arbitrary local targets without hidden scaffolding.
+5. **Bigtop smoke immediately after the generic agent path**: Cursor + Composer
    2.5 runs the generic path against the Apache Bigtop corpus profile and
    exposes the first real product gaps.
-5. **Useful map contents**: relationships, duplication, configuration surfaces,
+6. **Useful map contents**: relationships, duplication, configuration surfaces,
    and technical-debt findings implemented because the Bigtop smoke proves they
    are needed.
-6. **Repeatability and scale**: evidence diff, adapter contracts, optional MCP
+7. **Repeatability and scale**: evidence diff, adapter contracts, optional MCP
    and LSP/index surfaces, and larger Bigtop runs.
 
 Cursor + Composer 2.5 is the first cheap acceptance client because it is a
@@ -50,6 +51,7 @@ development's sake.
 | --- | --- | --- | --- |
 | P1-008 | `specs/008-agent-skill-pack/` | Any coding agent can read a portable Portolan guide or Cursor rule and run the expected mapping workflow without prompt-by-prompt handholding. | Implemented |
 | P1-014 | `specs/014-agent-bootstrap-discovery/` | An agent can discover Portolan's mapping workflow from the Portolan root or portable skill without being told an internal guide path. | Implemented |
+| P1-015 | future | Blind agent acceptance protocol for arbitrary local targets after bootstrap discovery. | Blocked on P1-014 PR merge |
 | P1-007 | `specs/007-apache-bigtop-corpus/` | Cursor + Composer 2.5 uses the skill pack on Apache Bigtop immediately after skills to expose missing product capabilities. | Local fallback smoke complete; Cursor + Composer operator lane degraded |
 
 ## P2: Build What The Bigtop Smoke Proves Is Missing

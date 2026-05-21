@@ -2,7 +2,7 @@
 
 **Feature Branch**: `014-agent-bootstrap-discovery`
 **Created**: 2026-05-21
-**Status**: Ready for implementation
+**Status**: Implemented
 **Input**: Product correction: Portolan must be usable as a generic agent
 toolbox when a user gives an agent the Portolan repository or installed binary
 and an arbitrary target repository, without a Bigtop-specific runbook.

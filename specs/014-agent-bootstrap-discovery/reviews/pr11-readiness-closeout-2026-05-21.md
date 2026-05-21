@@ -7,7 +7,7 @@ PR: https://github.com/fall-out-bug/portolan/pull/11
 
 - Head branch: `codex/014-agent-bootstrap-discovery-clean`
 - Base branch: `main`
-- Head commit after closeout push: `31da7e1f6c3885f99d6680ffa8a7e3f881d7186c`
+- Head commit after closeout push: `2de3d2349af2fa7e9063b85c02cf9f739d6d380b`
 - Draft state after closeout push: ready-for-review
 - Merge state: `CLEAN`
 - GitHub checks: `not_assessed`; `gh pr checks 11` reported no checks.
