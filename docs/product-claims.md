@@ -29,6 +29,13 @@ Syft/CycloneDX component identity evidence where those artifacts exist.
 Portolan should be described as a complement to Cursor and enterprise tools,
 not as their replacement.
 
+The agent acceptance matrix is now defined, with one narrow Codex single-repo
+lane verified on the Portolan repository as a self-target. That evidence shows
+the blind acceptance prompt can produce and score Portolan context and map
+artifacts in Codex for this local repository; it does not validate UI
+Cursor/Composer, OpenCode, external single-repo targets, multi-repo targets, or
+black-box/metadata-heavy targets.
+
 ## Claim Boundary
 
 | Claim | Status | Safe wording |
@@ -42,6 +49,7 @@ not as their replacement.
 | Portolan detects relationships across imports, manifests, metadata, runtime exports, and claims. | `narrowed` | Safe only when the relationship evidence type is named. Runtime-visible relationships require runtime evidence. |
 | Portolan replaces Cursor, coding harnesses, enterprise code intelligence, service catalogs, observability, modernization, or readiness tools. | `rejected` | Say Portolan is a local discovery and evidence-preparation complement. |
 | Portolan can safely support claims about UI Cursor/Composer behavior. | `not_assessed` | Use headless Cursor comparison wording until UI Cursor/Composer is validated. |
+| Portolan defines a blind acceptance matrix contract across multiple agent harnesses and target shapes. | `narrowed` | The matrix contract exists, but only the Codex single-repo self-target lane is verified. Cursor UI/Composer, OpenCode, external single-repo targets, multi-repo, and black-box/metadata-heavy cells remain `not_assessed`. |
 
 ## Limits That Must Stay Visible
 
@@ -49,6 +57,9 @@ not as their replacement.
   observability system, modernization engine, or control plane.
 - UI Cursor/Composer behavior is `not_assessed`; the comparison evidence is for
   headless Cursor on the fixed local Bigtop target.
+- Cross-harness acceptance is narrow: only the Codex single-repo self-target
+  matrix lane is verified; the other matrix cells and external single-repo
+  targets remain `not_assessed`.
 - Complete inherited-estate coverage is not proven by repository count.
 - Runtime service topology remains `not_assessed` without runtime observations.
 - OSS producer validation is narrow: Syft/CycloneDX component identity is
@@ -75,6 +86,10 @@ not as their replacement.
   `specs/037-relationship-evidence-taxonomy/reviews/merge-closeout-2026-05-27.md`
 - Bounded jscpd profile:
   `specs/039-bounded-jscpd-profile/reviews/implementation-disposition-2026-05-27.md`
+- Agent acceptance matrix:
+  `specs/041-agent-acceptance-matrix/reviews/acceptance-matrix-2026-05-27.md`
+- Codex single-repo acceptance lane:
+  `specs/041-agent-acceptance-matrix/reviews/codex-single-repo-lane-2026-05-27.md`
 
 ## How To Use This Page
 

@@ -1,10 +1,10 @@
 # Feature Specification: Agent Acceptance Matrix
 
-**Feature Branch**: `041-agent-acceptance-matrix`
+**Feature Branch**: `codex/041-agent-acceptance-matrix-delivery`
 
 **Created**: 2026-05-27
 
-**Status**: Ready for implementation
+**Status**: Implemented locally; PR not opened
 
 **Input**: Product-readiness gap: Portolan's value is validated narrowly on fixed local Bigtop with headless Cursor; broader agent and target acceptance remains `not_assessed`.
 
