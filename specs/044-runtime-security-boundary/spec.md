@@ -4,7 +4,7 @@
 
 **Created**: 2026-05-27
 
-**Status**: Integrated locally on `codex/productization-delivery-integration`; PR/GitHub checks not_assessed
+**Status**: Ready-for-review PR #20; runtime/security smoke and GitHub CI verified; merge approval not_assessed
 
 **Input**: Product-readiness gap: runtime topology remains `not_assessed`, and external product use needs a clear untrusted-artifact security boundary before adding richer agent/query surfaces.
 

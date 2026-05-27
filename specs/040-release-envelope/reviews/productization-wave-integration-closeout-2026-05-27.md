@@ -59,14 +59,14 @@ cherry-picking and resolving shared-file conflicts.
 
 ## Not Assessed
 
-- GitHub-hosted CI checks until the integration branch is pushed and a PR runs.
 - GitHub review approval.
-- Merge readiness.
+- Merge approval and ready-to-merge state.
 - UI Cursor/Composer and OpenCode acceptance lanes.
 - Full Graphify import, SCIP/Serena import, Repomix parsing, and Semgrep.
 - Complete runtime topology and broad security certification.
 
 ## Stop Reason
 
-Local integration and parent-agent final review are complete. Next required
-surface is PR publication and PR-level review/check evidence.
+Ready-for-review PR #20 is published with local verification, PR-level review,
+and GitHub CI checks recorded. Stop before merge because human/GitHub review
+approval is not_assessed and no merge approval was requested.

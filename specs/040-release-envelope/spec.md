@@ -4,7 +4,7 @@
 
 **Created**: 2026-05-27
 
-**Status**: Integrated locally on `codex/productization-delivery-integration`; GitHub workflow execution not_assessed until PR checks run
+**Status**: Ready-for-review PR #20; local baseline/install smoke and GitHub CI verified; merge approval not_assessed
 
 **Input**: Product-readiness gap: Portolan has a working local product kernel, but external users still lack a versioned release, CI proof, and clean-checkout install smoke.
 
