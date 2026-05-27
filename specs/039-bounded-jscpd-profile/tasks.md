@@ -69,7 +69,7 @@ positive statement cites verified bounded evidence.
 - [x] T016 Run `go test -count=1 ./...`, `jq empty schema/*.json`, and `git diff --check`; append results to `specs/039-bounded-jscpd-profile/reviews/verification-2026-05-27.md`.
 - [x] T017 Run independent review lanes and record raw outputs/disposition under `specs/039-bounded-jscpd-profile/reviews/`.
 - [x] T018 Fix accepted review findings and rerun focused verification.
-- [ ] T019 Create or update the PR, run PR review cycle, and record readiness closeout in `specs/039-bounded-jscpd-profile/reviews/pr-readiness-closeout-2026-05-27.md`.
+- [x] T019 Create or update the PR, run PR review cycle, and record readiness closeout in `specs/039-bounded-jscpd-profile/reviews/pr-readiness-closeout-2026-05-27.md`.
 
 ## Dependencies & Execution Order
 

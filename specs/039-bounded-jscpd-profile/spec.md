@@ -4,7 +4,7 @@
 
 **Created**: 2026-05-27
 
-**Status**: Local implementation complete; PR readiness pending
+**Status**: Ready-for-review PR; GitHub checks not_assessed
 
 **Input**: Follow-up from product claim gate and OSS producer acceptance:
 validate near-clone evidence only through a bounded, local `jscpd` producer
