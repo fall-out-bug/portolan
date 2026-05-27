@@ -114,7 +114,7 @@ fixtures are preflight evidence only.
 
 | ID | Spec | Outcome | Status |
 | --- | --- | --- | --- |
-| P5-040 | `specs/040-release-envelope/` | Portolan has a repeatable release and install envelope with CI, clean-checkout bootstrap smoke, and versioned artifact guidance. | Ready for implementation |
+| P5-040 | `specs/040-release-envelope/` | Portolan has a repeatable release and install envelope with CI, clean-checkout bootstrap smoke, and versioned artifact guidance. | Implemented locally on `codex/040-release-envelope-delivery`; local baseline and install smoke verified; GitHub checks not_assessed until workflow runs |
 | P5-041 | `specs/041-agent-acceptance-matrix/` | Portolan's product claim is tested across multiple agent harnesses and target shapes, with degraded lanes kept explicit. | Ready for implementation |
 | P5-042 | `specs/042-agent-adapter-layer/` | First-wave OSS/context adapters are evaluated and normalized as inputs rather than reimplemented scanners. | Ready for implementation |
 | P5-043 | `specs/043-readonly-query-surface/` | Agents can ask bounded read-only questions against a map bundle without loading the full graph first. | Ready for implementation |

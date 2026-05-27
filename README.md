@@ -138,6 +138,7 @@ Important limits:
 ## More Documentation
 
 - [Product Claims](docs/product-claims.md)
+- [Release Guide](docs/release.md)
 - [Product Boundary](docs/product-boundary.md)
 - [Evidence Model](docs/evidence-model.md)
 - [Relationship Detection](docs/relationship-detection.md)

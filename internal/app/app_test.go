@@ -38,6 +38,69 @@ func TestRunVersionWritesVersion(t *testing.T) {
 	}
 }
 
+func TestReleaseBuildCanInjectVersion(t *testing.T) {
+	workDir := t.TempDir()
+	out := filepath.Join(workDir, "portolan")
+
+	build := exec.Command("go", "build", "-trimpath", "-ldflags", "-X github.com/fall-out-bug/portolan/internal/app.Version=v-test", "-o", out, "./cmd/portolan")
+	build.Dir = "../.."
+	buildOut, err := build.CombinedOutput()
+	if err != nil {
+		t.Fatalf("release build failed: %v\n%s", err, buildOut)
+	}
+
+	version := exec.Command(out, "--version")
+	versionOut, err := version.CombinedOutput()
+	if err != nil {
+		t.Fatalf("release binary failed: %v\n%s", err, versionOut)
+	}
+	if got := strings.TrimSpace(string(versionOut)); got != "portolan v-test" {
+		t.Fatalf("version output = %q, want portolan v-test", got)
+	}
+}
+
+func TestCIWorkflowRunsReleaseEnvelopeBaseline(t *testing.T) {
+	data := mustReadRepoFile(t, ".github/workflows/ci.yml")
+	for _, want := range []string{
+		"pull_request:",
+		"push:",
+		"go-version-file: go.mod",
+		"go test -count=1 ./...",
+		"jq empty schema/*.json",
+		"git diff --check",
+		"go run ./cmd/portolan --help",
+	} {
+		if !strings.Contains(data, want) {
+			t.Fatalf("ci workflow missing %q:\n%s", want, data)
+		}
+	}
+}
+
+func TestReleaseDocsPreserveCurrentProductClaimLimits(t *testing.T) {
+	data := mustReadRepoFile(t, "docs/release.md")
+	for _, want := range []string{
+		"UI Cursor/Composer behavior is `not_assessed`",
+		"Complete inherited-estate coverage is not proven by repository count.",
+		"Runtime service topology remains `not_assessed`",
+		"Semgrep remains `not_assessed`",
+		"sha256sum",
+		"PORTOLAN_BOOTSTRAP_ALLOW_NETWORK=1",
+	} {
+		if !strings.Contains(data, want) {
+			t.Fatalf("release docs missing %q:\n%s", want, data)
+		}
+	}
+}
+
+func mustReadRepoFile(t *testing.T, path string) string {
+	t.Helper()
+	data, err := os.ReadFile(filepath.Join("../..", path))
+	if err != nil {
+		t.Fatalf("read %s: %v", path, err)
+	}
+	return string(data)
+}
+
 func TestBootstrapPortolanScriptBuildsLocalBinary(t *testing.T) {
 	script, err := filepath.Abs("../../scripts/bootstrap-portolan")
 	if err != nil {

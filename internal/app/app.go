@@ -18,7 +18,7 @@ import (
 	"github.com/fall-out-bug/portolan/internal/selection"
 )
 
-const Version = "dev"
+var Version = "dev"
 
 func Run(args []string, stdout io.Writer, stderr io.Writer) int {
 	if len(args) == 0 {
