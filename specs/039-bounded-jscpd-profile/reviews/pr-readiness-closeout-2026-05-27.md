@@ -6,7 +6,9 @@ Date: 2026-05-27
 
 - PR: <https://github.com/fcon-tech/portolan/pull/19>
 - Head branch: `codex/039-bounded-jscpd-profile`
-- Head commit: `1236596f32fd286e38a13883a45773b1dd14e8ff`
+- Head commit at PR-state reconstruction: `1236596f32fd286e38a13883a45773b1dd14e8ff`.
+  The follow-up readiness-closeout commit may advance the branch head without
+  changing implementation scope.
 - Base branch: `main`
 - PR state: open
 - Draft: false
