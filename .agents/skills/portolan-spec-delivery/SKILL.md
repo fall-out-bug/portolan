@@ -68,12 +68,15 @@ Run independent review lanes. Prefer:
 Default slice-review model lanes:
 
 - `kimi-coding/kimi-for-coding`
-- `minimax/MiniMax-M2.7`
+- `openrouter/minimax/minimax-m2.7`
 - `zai/glm-5.1`
 
 These are the normal subscription-backed slice reviewers. Use all three for
 ordinary implementation slices unless the slice is purely mechanical or
-documentation-only. If a lane is unavailable, empty, stale, or off-task, mark it
+documentation-only. The direct `minimax/MiniMax-M2.7` provider lane is not the
+default because it returned `404 page not found` in smoke tests; use the
+OpenRouter MiniMax lane unless the direct provider is explicitly revalidated and
+approved. If a lane is unavailable, empty, stale, or off-task, mark it
 `not_assessed` and do not count it toward coverage.
 
 Write review dispositions under:
@@ -134,7 +137,7 @@ For ordinary code slices, run the default slice-review model lanes through `pi`:
 
 ```bash
 pi --no-tools --no-context-files --no-session --model kimi-coding/kimi-for-coding -p "$PROMPT"
-pi --no-tools --no-context-files --no-session --model minimax/MiniMax-M2.7 -p "$PROMPT"
+pi --no-tools --no-context-files --no-session --model openrouter/minimax/minimax-m2.7 -p "$PROMPT"
 pi --no-tools --no-context-files --no-session --model zai/glm-5.1 -p "$PROMPT"
 ```
 

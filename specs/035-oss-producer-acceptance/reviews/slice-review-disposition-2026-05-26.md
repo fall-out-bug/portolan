@@ -24,11 +24,14 @@ Review covered the spec-local producer acceptance artifacts and the narrow
 
 | Lane | Status | Disposition |
 | --- | --- | --- |
-| `kimi-coding/kimi-for-coding` | `not_assessed` | Returned repeated context-gathering/tool-call text and no substantive findings. |
-| `minimax/MiniMax-M2.7` | `not_assessed` | Returned `404 page not found`. |
-| `zai/glm-5.1` | `not_assessed` | Returned an off-task startup sentence and no substantive findings. |
+| `kimi-coding/kimi-for-coding` | `not_assessed` | Initial run returned repeated context-gathering/tool-call text and no substantive findings. Recovery smoke passed, but full and narrowed review prompts timed out after 180 seconds without output. |
+| `minimax/MiniMax-M2.7` | `failed` | Direct provider returned `404 page not found`; recovery JSON mode confirmed provider/API error with token usage 0. |
+| `openrouter/minimax/minimax-m2.7` | `verified` | Approved replacement lane; smoke passed and review prompt returned `NO FINDINGS`. |
+| `zai/glm-5.1` | `verified` with disposition | Recovery smoke passed and review prompt returned substantive findings; accepted/rejected follow-ups are recorded in `review-lane-recovery-2026-05-27.md`. |
 
-Degraded lanes are not counted as clean review evidence.
+Degraded lanes are not counted as clean review evidence. The approved
+OpenRouter MiniMax replacement is counted as MiniMax review evidence for this
+slice.
 
 ## Verification
 
