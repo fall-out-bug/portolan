@@ -66,7 +66,7 @@ func TestCIWorkflowRunsReleaseEnvelopeBaseline(t *testing.T) {
 		"push:",
 		"go-version-file: go.mod",
 		"go test -count=1 ./...",
-		"jq empty schema/*.json",
+		"jq empty schema/*.json testdata/oss-adapter-contract/*.json",
 		"git diff --check",
 		"go run ./cmd/portolan --help",
 	} {

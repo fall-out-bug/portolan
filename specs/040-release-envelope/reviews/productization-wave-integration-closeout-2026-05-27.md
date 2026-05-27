@@ -52,6 +52,10 @@ cherry-picking and resolving shared-file conflicts.
 - Shared-file conflict resolution: verified. `docs/product-backlog.md` and
   `docs/product-claims.md` now include all five P5 surfaces without broadening
   claims beyond recorded evidence.
+- PR-level review: verified with three assessed independent non-GPT lanes plus
+  one additional assessed lane. Degraded Kimi output and failed GLM/MiniMax
+  attempts are recorded as not counted in
+  `productization-wave-pr-review-disposition-2026-05-27.md`.
 
 ## Not Assessed
 

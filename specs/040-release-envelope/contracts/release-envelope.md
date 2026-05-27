@@ -6,7 +6,7 @@ The default CI workflow must run:
 
 ```bash
 go test -count=1 ./...
-jq empty schema/*.json
+jq empty schema/*.json testdata/oss-adapter-contract/*.json
 git diff --check
 go run ./cmd/portolan --help
 ```
