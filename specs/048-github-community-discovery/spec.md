@@ -1,12 +1,12 @@
 # Feature Specification: GitHub Community Discovery
 
-**Feature Branch**: `codex/047-public-showcase-specs`
+**Feature Branch**: `codex/048-github-community-discovery`
 
 **Created**: 2026-05-30
 
-**Status**: Draft spec; GitHub private vulnerability reporting approved as the
-primary security contact path; implementation blocked on enabling/verifying the
-GitHub setting, conduct policy, and public metadata approval
+**Status**: Local implementation ready; GitHub metadata and private
+vulnerability reporting verified; community profile completion blocked until
+this branch is merged to the default branch and rechecked
 
 **Input**: User description: "Specs for a public showcase/popularization path."
 
