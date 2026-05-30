@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/fall-out-bug/portolan/internal/graph"
+	"github.com/fcon-tech/portolan/internal/graph"
 )
 
 type graphifyGraph struct {

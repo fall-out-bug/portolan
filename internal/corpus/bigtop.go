@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/fall-out-bug/portolan/internal/coverage"
-	"github.com/fall-out-bug/portolan/internal/selection"
+	"github.com/fcon-tech/portolan/internal/coverage"
+	"github.com/fcon-tech/portolan/internal/selection"
 )
 
 type BigtopSelectionOptions struct {

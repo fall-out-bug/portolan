@@ -9,10 +9,10 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/fall-out-bug/portolan/internal/blackbox"
-	"github.com/fall-out-bug/portolan/internal/coverage"
-	"github.com/fall-out-bug/portolan/internal/graph"
-	"github.com/fall-out-bug/portolan/internal/selection"
+	"github.com/fcon-tech/portolan/internal/blackbox"
+	"github.com/fcon-tech/portolan/internal/coverage"
+	"github.com/fcon-tech/portolan/internal/graph"
+	"github.com/fcon-tech/portolan/internal/selection"
 )
 
 type Options struct {

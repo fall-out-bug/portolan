@@ -11,8 +11,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/fall-out-bug/portolan/internal/graph"
-	"github.com/fall-out-bug/portolan/internal/scan"
+	"github.com/fcon-tech/portolan/internal/graph"
+	"github.com/fcon-tech/portolan/internal/scan"
 )
 
 type Options struct {

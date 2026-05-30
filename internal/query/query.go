@@ -13,7 +13,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/fall-out-bug/portolan/internal/coverage"
+	"github.com/fcon-tech/portolan/internal/coverage"
 )
 
 const (
