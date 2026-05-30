@@ -7,8 +7,8 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/fall-out-bug/portolan/internal/graph"
-	"github.com/fall-out-bug/portolan/internal/selection"
+	"github.com/fcon-tech/portolan/internal/graph"
+	"github.com/fcon-tech/portolan/internal/selection"
 )
 
 type Result struct {

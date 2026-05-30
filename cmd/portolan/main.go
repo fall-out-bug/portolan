@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/fall-out-bug/portolan/internal/app"
+	"github.com/fcon-tech/portolan/internal/app"
 )
 
 func main() {
