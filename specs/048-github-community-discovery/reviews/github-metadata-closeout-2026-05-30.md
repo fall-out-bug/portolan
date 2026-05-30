@@ -47,3 +47,5 @@ GitHub metadata and private vulnerability reporting are externally verified.
 Community profile completion remains blocked on merging this branch to the
 default branch and rechecking the profile.
 
+The badge, Scorecard, and Best Practices states are recorded as `not_assessed`.
+They are not positive OSS-health claims for this release.

@@ -4,7 +4,8 @@
 
 ## Implementation State
 
-State: `local implementation ready`
+State: `verified` for local implementation artifacts and checks; `blocked` for
+default-branch community profile until merge.
 
 Added initial public community infrastructure:
 
@@ -33,7 +34,7 @@ review artifacts.
 | Evidence-state language scan | `verified` | `rg -n "not_assessed|unknown|cannot_verify|blocked|failed|verified" CONTRIBUTING.md SECURITY.md SUPPORT.md .github README.md` found the required terms in public surfaces. |
 | Public-claim wording scan | `verified` | `rg -n "replace|observability|service catalog|security scanner|certification|SLA|complete estate|modernization|adoption|support commitments" README.md CONTRIBUTING.md SECURITY.md SUPPORT.md .github docs/product-claims.md -S` found limiting/negative wording only. |
 | GitHub metadata | `verified` | Description, empty homepage, topics, public repo state, and private vulnerability reporting were checked with `gh`. |
-| GitHub community profile | `blocked` | New files are in this branch; profile cannot show them until merge to default branch. |
+| GitHub community profile | `blocked` | New files are in this branch; profile cannot show them until merge to default branch. Recheck during merge closeout with `gh api repos/fcon-tech/portolan/community/profile`. |
 | GitHub PR checks | `verified` | PR #24 checks passed after opening: Baseline, CodeQL Analyze (actions), CodeQL Analyze (go), and CodeQL. |
 
 ## Review Evidence

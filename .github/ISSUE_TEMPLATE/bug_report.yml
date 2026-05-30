@@ -15,6 +15,11 @@ body:
     attributes:
       label: Command And Target Shape
       description: Include the command, target shape, output path, and Portolan version or commit.
+      placeholder: |
+        Version or commit:
+        Command:
+        Target shape:
+        Output path:
       render: text
     validations:
       required: true

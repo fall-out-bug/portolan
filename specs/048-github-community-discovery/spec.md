@@ -33,7 +33,9 @@ without reading SpecKit internals.
    local-first evidence-preparation CLI for agents.
 2. **Given** a visitor searches GitHub by topic, **When** Portolan appears,
    **Then** topics reflect real capabilities and do not imply unsupported
-   service-catalog, security-scanner, or observability scope.
+   service-catalog, security-scanner, or observability scope. The approved topic
+   set is recorded in
+   `specs/048-github-community-discovery/reviews/github-metadata-proposal-2026-05-30.md`.
 
 ---
 

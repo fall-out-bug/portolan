@@ -30,3 +30,6 @@ For sensitive vulnerability reports, use [SECURITY.md](SECURITY.md). For
 non-sensitive conduct concerns, open a GitHub issue with only the public details
 needed for maintainers to act. Until a dedicated private conduct contact exists,
 do not post sensitive personal details publicly.
+
+If you believe an enforcement action was applied in error, open a good-faith
+public issue with non-sensitive details so maintainers can review it.

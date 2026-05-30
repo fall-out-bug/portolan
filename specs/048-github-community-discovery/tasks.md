@@ -102,7 +102,7 @@ conduct policy.
 - [x] T028 Run `go test -count=1 ./...` and record result in `specs/048-github-community-discovery/reviews/community-closeout-2026-05-30.md`
 - [x] T029 Run `jq empty .specify/feature.json schema/*.json` and record result in `specs/048-github-community-discovery/reviews/community-closeout-2026-05-30.md`
 - [x] T030 Run public-claim wording scan over `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, `.github/`, and record result in `specs/048-github-community-discovery/reviews/community-closeout-2026-05-30.md`
-- [x] T031 Record GitHub metadata, badge, Scorecard, and community profile states in `specs/048-github-community-discovery/reviews/github-metadata-closeout-2026-05-30.md`
+- [x] T031 Record current GitHub metadata, badge, Scorecard, and community profile states, including `blocked` and `not_assessed`, in `specs/048-github-community-discovery/reviews/github-metadata-closeout-2026-05-30.md`
 - [x] T032 Update `specs/048-github-community-discovery/spec.md` status
 - [x] T033 Update `specs/048-github-community-discovery/tasks.md` completion ledger
 - [x] T034 Update `docs/product-backlog.md` status row for P5-048
@@ -130,3 +130,12 @@ conduct policy.
 4. Add bounded security and conduct guidance.
 5. Record every external GitHub setting as `verified`, `blocked`, or
    `not_assessed`.
+
+## Post-Merge Follow-Up Boundary
+
+The default-branch community profile cannot be verified from this branch before
+merge. Recheck it during merge closeout with:
+
+```bash
+gh api repos/fcon-tech/portolan/community/profile
+```

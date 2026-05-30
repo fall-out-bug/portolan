@@ -1,5 +1,7 @@
 # Security Policy
 
+This policy was last reviewed on 2026-05-30.
+
 ## Supported Versions
 
 | Version | Support |

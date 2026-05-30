@@ -11,8 +11,8 @@ local-first, read-only by default, and honest about unknowns.
   evidence labels clearer.
 - Focused CLI, schema, or artifact improvements backed by SpecKit tasks and
   tests.
-- New importer or producer integrations when they normalize existing local tool
-  output instead of replacing mature scanners.
+- Focused importer or producer proposals that normalize local tool output and
+  include a SpecKit plan.
 - Review artifacts that narrow, reject, block, or verify public claims.
 
 Avoid broad rewrites, speculative architecture, daemon behavior, network access,

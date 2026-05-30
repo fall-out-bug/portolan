@@ -11,24 +11,19 @@
 Record every relevant check as `verified`, `failed`, `blocked`, or
 `not_assessed`.
 
-- [ ] `go test -count=1 ./...`
-- [ ] `jq empty schema/*.json`
+- [ ] `go test -count=1 ./...`, if Go behavior or shared contracts changed:
+- [ ] `jq empty schema/*.json`, if schemas or JSON feature metadata changed:
 - [ ] `git diff --check`
+- [ ] Issue template YAML parse, if `.github/ISSUE_TEMPLATE/*.yml` changed:
 - [ ] Affected CLI command or fixture smoke, if applicable:
 - [ ] GitHub checks:
 
 ## Evidence-State Impact
 
-- `verified`:
-- `failed`:
-- `blocked`:
-- `source-visible` or N/A:
-- `metadata-visible` or N/A:
-- `runtime-visible` or N/A:
-- `claim-only` or N/A:
-- `unknown` or N/A:
-- `cannot_verify` or N/A:
-- `not_assessed` or N/A:
+List only states affected by this PR, or write `N/A`.
+
+- Affected evidence states:
+- Unchanged evidence states:
 
 ## Product-Claim Impact
 

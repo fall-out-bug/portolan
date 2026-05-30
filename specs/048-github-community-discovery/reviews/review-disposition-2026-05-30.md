@@ -10,6 +10,10 @@
 
 ## Model Review Lanes
 
+Attempt summary: 6 lanes attempted, 3 assessed, 2 provider failures, and 1
+off-task/tool-request output. Only assessed non-GPT lanes count as review
+evidence.
+
 | Lane | State | Result |
 | --- | --- | --- |
 | `openrouter/moonshotai/kimi-k2.6` | `assessed` | Full diff review found no critical or major blockers; minor UX/DX notes only. |
@@ -43,4 +47,3 @@
 
 Three assessed non-GPT review lanes plus local review found no unresolved
 critical or major blocker for the local implementation.
-
